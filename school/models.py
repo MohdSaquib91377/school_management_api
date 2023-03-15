@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .managers import UserManager
+from school.managers import UserManager
 
 class TimeStampModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -11,7 +11,7 @@ class TimeStampModel(models.Model):
         abstract = True
 
 
-class User(AbstractBaseUser,PermissionsMixin,TimeStampModel):
+class School(AbstractBaseUser,PermissionsMixin,TimeStampModel):
     email = models.EmailField(_("email address"), unique=True)
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)

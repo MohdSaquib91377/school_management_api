@@ -1,8 +1,8 @@
 from django.db import models
-from account import models as account_models
+from school import models as school_models
 # Create your models here.
 
-class Grade(account_models.TimeStampModel):
+class Grade(school_models.TimeStampModel):
     GRADE_TYPE_CHOICES = (
         ("1","1"),
         ("2","2"),
@@ -28,11 +28,11 @@ class Grade(account_models.TimeStampModel):
         return f"{self.grade}"
     
 
-class Student(account_models.TimeStampModel):
+class Student(school_models.TimeStampModel):
     grade = models.ForeignKey(Grade, related_name="students",on_delete=models.CASCADE)
     username = models.CharField(max_length=64)
-    name = models.CharField(max_length=64)
-    password = models.CharField(max_length=64)
+    name = models.CharField(max_length=64,null=True, blank=True)
+    password = models.CharField(max_length=128)
     
     class Meta:
         ordering = ("-created_at",)

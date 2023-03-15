@@ -1,7 +1,8 @@
 
-from account import services as account_services
-from student import serializers as student_serializers
+from school import services as school_services
+from student.api import serializers as student_serializers
 from student import query as student_query
+
 class StudentService:
 
     @staticmethod
@@ -33,4 +34,17 @@ class StudentService:
         if serializer.is_valid():
             serializer.save()
             return 200, f"records updated successfully"
+        return 400, serializer.errors
+
+
+class StudentAuthService:
+    def validate_login_payload(payaload): 
+        serializer = student_serializers.StudentLoginSerializer(data = payaload)
+        if serializer.is_valid():
+            status = student_query.StudentAuthHandler.validate_by_username_and_password(serializer.validated_data["username"], serializer.validated_data["password"])
+            if not status:
+                return 400, "invalid credentials"
+
+                
+            return 200, 'login successfully'
         return 400, serializer.errors

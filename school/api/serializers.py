@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from account import models as account_models
+from school import models as school_models
 
 class SchoolSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = account_models.User
+        model = school_models.School
         fields = ["email","name","city","pin_code","password"]
 
 

@@ -1,4 +1,4 @@
-"""school URL Configuration
+"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -21,8 +21,8 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('school/', include('account.urls')),
-    path('student/', include('student.urls')),
+    path('school/', include('school.api.urls')),
+    path('student/', include('student.api.urls')),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     

@@ -1,16 +1,16 @@
 
-from account import serializers as account_serializers
-from account import query as account_query
+from school.api import serializers as school_serializers
+from school import query as school_query
 from django.contrib.auth.hashers import make_password
 
 from service import jwt as service_jwt
 
 
-class UserSignupService:
+class SchoolSignupService:
 
     @staticmethod
     def validate_signup_payload(payload: dict):
-        serializer = account_serializers.SchoolSignupSerializer(payload)
+        serializer = school_serializers.SchoolSignupSerializer(data = payload)
         if serializer.is_valid():
            
 
@@ -18,21 +18,21 @@ class UserSignupService:
             data["password"] = make_password(data["password"])
             
             
-            account_query.SchoolSignupHandler.create_single_user(data)
+            school_query.SchoolSignupHandler.create_single_user(data)
             return 200, "school signup successful"
         
         status, data = 400, serializer.errors
         return status, data
     
 
-class UserLoginService:
+class SchoolLoginService:
     @staticmethod
     def validate_login_payload(payload: dict):
-        serializer = account_serializers.SchoolLoginSerializer(data = payload)
+        serializer = school_serializers.SchoolLoginSerializer(data = payload)
         if serializer.is_valid():
             #TODO: hash password
             data = serializer.validated_data
-            user = account_query.SchoolLoginHandler.is_authenticate_user(data["email"], data["password"])
+            user = school_query.SchoolLoginHandler.is_authenticate_user(data["email"], data["password"])
             if user is None:
                 status,data = 400, "Invalid credentials"
                 return status,data
